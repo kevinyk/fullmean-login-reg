@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginregService } from './../loginreg.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-success',
@@ -8,7 +9,7 @@ import { LoginregService } from './../loginreg.service';
 })
 export class SuccessComponent implements OnInit {
   currentUser: object = {name:""};
-  constructor(private _loginRegService: LoginregService) { }
+  constructor(private _loginRegService: LoginregService, private _router: Router) { }
 
   ngOnInit() {
   	this._loginRegService.getCurrentUser()
@@ -20,6 +21,9 @@ export class SuccessComponent implements OnInit {
   	.catch((error)=>{
   		console.log("catch");
   		console.log(error);
+      if(error.status==401){
+        this._router.navigate(['/login'])
+      }
   	})
   }
 
